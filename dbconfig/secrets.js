@@ -15,4 +15,5 @@ else{
 module.exports = {
     DATABASE: MONGODB,
     BASEURL:BASEURL,
+    JWT_SECRET: process.env.JWT_SECRET
 }

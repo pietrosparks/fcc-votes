@@ -8,7 +8,7 @@ module.exports = {
     connect() {
         dbConnection.on('error', console.error.bind(console.error));
         dbConnection.once('open', () => {
-            console.log('DB COnnected');
+            console.log('VotesDB Connected');
         })
     }
 }
