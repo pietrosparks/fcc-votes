@@ -8,17 +8,20 @@
                 <a class="navbar-item">
                     <!-- <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28"> -->
                 </a>
-                <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+                <div class="navbar-burger  burger" @click="openBurger()" :class="{'is-active':burger}" data-target="navbarExampleTransparentExample">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
             </div>
 
-            <div id="navbarExampleTransparentExample" class="navbar-menu">
+            <div id="navbarExampleTransparentExample" class="navbar-menu" :class="{'is-active':burger}">
                 <div class="navbar-start">
-                    <div class="field" style="margin:auto">
-                        <router-link class="button" to="/polls">Home</router-link>
+                    <div class="field">
+                        <div class="control" style="margin:5px 20px">
+                            <router-link class="button" to="/polls">Home</router-link>
+                        </div>
+
                     </div>
 
                 </div>
@@ -26,8 +29,8 @@
                 <div class="navbar-end">
                     <span v-if="auth==true">
                         <div class="navbar-item">
-                            <div class="field user">
-                                <p class="control">Welcome {{id.name}}</p>
+                            <div class="field user" >
+                                <p class="control" style="color: white">Welcome {{id.name}}</p>
                             </div>
                             <div class="field">
 
@@ -60,22 +63,25 @@
 </template>
 
 <script>
-   
     export default {
         name: 'Signup',
         data() {
             return {
                 id: '',
-                auth:null
+                auth: null,
+                burger: false
             }
         },
         methods: {
             logout() {
                 localStorage.clear();
                 this.$router.push('/login')
+            },
+            openBurger() {
+                this.burger = !this.burger
             }
         },
-       
+
     }
 </script>
 
@@ -84,8 +90,21 @@
         background-color: teal;
     }
 
-    .user {
-        color: white;
-        margin: 5px 20px;
+    @media (min-width: 768px) {
+
+        .user {
+            margin: 5px 20px;
+        }
+
+    }
+
+
+
+    .navbar-burger {
+        background-color: white;
+    }
+
+    .navbar-menu {
+        background-color: teal;
     }
 </style>
