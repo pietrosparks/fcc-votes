@@ -4,7 +4,7 @@
         <div class="container">
             <div class="bg">
                 <h1>Freecodevote</h1>
-                <h3>Select a poll below</h3>
+                <h3>Select a poll below or signup/login to create one</h3>
             </div>
             <div class="columns is-centered">
                 <div class="column is-one-third">

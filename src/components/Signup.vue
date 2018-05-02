@@ -52,7 +52,7 @@
       signUp(){
         this.$axios.post('/auth/signup',this.user).then(resp=>{
           this.$responseModal(resp.data.status, resp.data.message, resp.data.status);
-          this.$router.push('/polls')
+          this.$router.push('/login')
         }).catch(e=>{
 
         })
