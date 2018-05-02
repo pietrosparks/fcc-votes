@@ -10,7 +10,7 @@ module.exports = (api, Users, _, functions) => {
         req.getValidationResult()
             .then((result) => {
                 if (!result.isEmpty()) {
-                    return utils.jsonResponse(400, 'error', null.res, 'Data Validation Failed', result.array())
+                    return utils.jsonResponse(400, 'error', null,res, 'Data Validation Failed', result.array())
                 }
                 Users.findOne({
                     email: req.body.email
@@ -40,20 +40,23 @@ module.exports = (api, Users, _, functions) => {
         req.getValidationResult()
             .then((result) => {
                 if (!result.isEmpty()) {
-                    return functions.jsonResponse(400, 'error', null.res, 'Data Validation Failed', result.array())
+                    return functions.jsonResponse(400, 'error', null,res, 'Data Validation Failed', result.array())
                 }
                 Users.findOne({
                     email: req.body.email.toLowerCase(),
                 }).exec((err, user) => {
                     if (err) functions.jsonResponse(500, 'error', null, "An Error occured while fetching user", result.array())
                     if (user) {
+    
                         if (functions.decrypter(req.body.password, user.password)) {
-                            const user_response = _.pick(user, ['name','email','token']);
-                            console.log(user_response,"lool")
+                            const user_response = _.pick(user, ['_id','name','email','token']);
                             return functions.jsonResponse(200, 'success', user_response, res, 'Successfully Logged In');
                         }
+                        else return functions.jsonResponse(403, 'error', null, res, 'Incorrect Email/Password combination',err);
+                        
                     }
                 })
             })
     })
+
 }

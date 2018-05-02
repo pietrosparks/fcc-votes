@@ -11,6 +11,9 @@ const pollSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Users'
     },
+    user_name:{
+        type: String
+    },
     options: {
         type: Array,
         required:true
@@ -25,9 +28,12 @@ const pollSchema = Schema({
         index: true,
         unique: true,
         lowercase:true,
+    },
+    result:{
+        type:Object
     }
 
 
-},{timestamp:true})
+},{timestamps:true})
 
 module.exports = mongoose.model('Polls', pollSchema);

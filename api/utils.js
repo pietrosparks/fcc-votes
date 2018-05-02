@@ -4,6 +4,7 @@ const JWT = require('jsonwebtoken');
 const random = require('random-id');
 const secrets = require('./dbconfig/secrets');
 const expressJWT = require('express-jwt');
+const requestIp = require('request-ip');
 
 const encryptPayload = (payload) => {
 
@@ -75,4 +76,5 @@ module.exports = {
     encryptPayload: encryptPayload,
     requestAuthorization: requestAuthorization,
     jsonResponse,
+    ip: requestIp
 }

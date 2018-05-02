@@ -29,7 +29,7 @@ const userSchema = Schema({
 
 
 }, {
-    timestamp: true
+    timestamps: true
 })
 userSchema.plugin(uniqueValidator);
 module.exports = Mongoose.model('Users', userSchema);
