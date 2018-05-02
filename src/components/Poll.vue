@@ -201,7 +201,7 @@
             },
             shareTwitter() {
                 const text =
-                    `http://twitter.com/intent/tweet?text=Vote on the poll '+${this.selected_poll.name}+'+by+clicking+the+link+below+to+cast+a+vote+https://fcc-voting-app.herokuapp.com/polls/${this.selected_poll.poll_id}`
+                    `http://twitter.com/intent/tweet?text=Vote on the poll '+${this.selected_poll.name}+'+by+clicking+the+link+below+to+cast+a+vote+https://freecodevote.herokuapp.com/polls/${this.selected_poll.poll_id}`
 
                 this.shareUrl = text
             }
