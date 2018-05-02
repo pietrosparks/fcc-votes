@@ -52,11 +52,12 @@ app.use(cors(corsConfig), (req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(validator());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/',serveStatic(__dirname + "/dist"));
 app.use('/api', api);
 app.use(history({verbose: true}))
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('short'));
-  app.use(serveStatic(__dirname + "/dist"));
+
 
 //catch errors 
 app.use((req, res, next) => {
