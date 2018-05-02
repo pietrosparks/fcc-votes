@@ -18,6 +18,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 Vue.prototype.$responseModal = Swal;
 
+console.log(process.env,"envi")
 if(process.env.NODE_ENV=="development"){
   axios.defaults.baseURL = process.env.BASEURL_DEV
 }

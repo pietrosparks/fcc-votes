@@ -10,6 +10,10 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [{
+      path: '/',
+      redirect: '/polls'
+    },
+    {
       path: '/login',
       name: 'HelloWorld',
       component: Login
@@ -25,9 +29,9 @@ export default new Router({
       component: Polls
     },
     {
-      path:'/polls/:id',
-      name:'Poll',
-      component:Poll
+      path: '/polls/:id',
+      name: 'Poll',
+      component: Poll
     }
   ]
 })
