@@ -6,7 +6,7 @@
                 <h1>Freecodevote</h1>
                 <h3>Select a poll below or signup/login to create one</h3>
             </div>
-            <div class="columns is-centered">
+            <div class="columns is-centered" v-if="polls.length">
                 <div class="column is-one-third">
                     <div class="box ">
                         <div class="control" v-if="auth">
@@ -33,6 +33,13 @@
                     </div>
                 </div>
             </div>
+             <div class='columns is-centered' v-else  >
+                <div class="column is-two-thirds">
+                    <div class="box center">
+                        <atom-spinner :size="100" :color="'#ff1d5e'" style="margin:0 auto" />
+                    </div>
+                </div>
+                </div>
         </div>
 
         <!--Create Poll Modal -->
@@ -84,6 +91,10 @@
 <script>
     import navbar from '@/components/Navbar';
     import random from 'random-id';
+    import {
+        AtomSpinner
+    } from 'epic-spinners/dist/lib/epic-spinners.min.js'
+
     export default {
         name: 'Polls',
         data() {
@@ -100,9 +111,7 @@
                 user_polls: null
             }
         },
-        components: {
-            navbar
-        },
+       
         methods: {
             addOptions() {
                 this.pollOptions.count = 0;
@@ -148,6 +157,10 @@
                     path: `/polls/${poll.poll_id}`
                 });
             }
+        },
+        components: {
+            navbar,
+            AtomSpinner
         },
         mounted() {
             this.getAllPolls()

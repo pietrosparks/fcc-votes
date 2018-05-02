@@ -3,7 +3,8 @@
         <navbar>
         </navbar>
         <div class="container">
-            <div class="columns">
+            <div class="columns" v-if="selected_poll.name">
+
                 <div class="column is-one-third">
                     <div class="box">
                         <div class="content">
@@ -32,6 +33,18 @@
                         <piechart v-if="chart_data.datasets" :chart-data="chart_data"></piechart>
                     </div>
                 </div>
+
+
+            </div>
+            <div class='columns is-centered' v-else  >
+                <div class="column is-two-thirds">
+                    <div class="box center">
+                        <atom-spinner :size="100" :color="'#ff1d5e'" style="margin:0 auto" />
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
 
@@ -85,6 +98,9 @@
     import navbar from '@/components/Navbar'
     import piechart from '@/components/Chart'
     import random from 'random-id';
+    import {
+        AtomSpinner
+    } from 'epic-spinners/dist/lib/epic-spinners.min.js'
 
     export default {
         name: 'Poll',
@@ -196,7 +212,8 @@
 
         components: {
             navbar,
-            piechart
+            piechart,
+            AtomSpinner
         }
     }
 </script>
@@ -242,5 +259,10 @@
 
     .share a {
         color: white
+    }
+
+    .box.center{
+        height: 300px;
+        padding: 100px;
     }
 </style>
