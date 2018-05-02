@@ -128,8 +128,9 @@
             },
             vote(option) {
                 option.count++;
-                const user = JSON.parse(localStorage.user);
+
                 if (localStorage.user) {
+                    const user = JSON.parse(localStorage.user);
                     if (this.selected_poll.voters.includes(user._id)) {
                         return window.alert('You cant vote again for this poll')
                     } else this.selected_poll.voters.push(user._id)
