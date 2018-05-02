@@ -37,8 +37,18 @@ module.exports = (api, Users, Polls, _, functions) => {
             if (_.isEmpty(poll)) functions.jsonResponse(404, 'error', null, res, "No polls have been created");
             else {
                 const ip = functions.ip.getClientIp(req)
-                return functions.jsonResponse(200, 'success', poll, res, "Polls retrieved Sucessfully",ip );
+                return functions.jsonResponse(200, 'success', poll, res, "Polls retrieved Sucessfully", ip);
             }
+        })
+    })
+
+    api.get('/:userId/polls', (req, res) => {
+        Polls.find({
+            user_id: req.params.userId
+        }).exec((err, poll) => {
+            if (err) functions.jsonResponse(500, 'error', null, res, 'An error occured while fetching polls', err);
+            else if (!poll || _.isEmpty(poll)) functions.jsonResponse(404, 'error', null, res, 'No Polls Found', err);
+            else return functions.jsonResponse(200, 'success', poll, res, 'Polls Retrieved Successfully');
         })
     })
 
@@ -60,11 +70,11 @@ module.exports = (api, Users, Polls, _, functions) => {
             if (!poll) functions.jsonResponse(404, 'error', null, res, "Poll doesnt exist", err);
             const poll_update = _.pick(req.body, ['options', 'voters', ]);
             let total = 0;
-            poll_update.options.forEach(opt=>{
-                total+=opt.count;
+            poll_update.options.forEach(opt => {
+                total += opt.count;
             })
-            poll_update.options = poll_update.options.map(opt=>{
-                opt.result = (opt.count/total)*100;
+            poll_update.options = poll_update.options.map(opt => {
+                opt.result = (opt.count / total) * 100;
                 return opt;
             })
             poll = Object.assign(poll, poll_update);

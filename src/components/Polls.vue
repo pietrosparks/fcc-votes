@@ -2,18 +2,32 @@
     <div>
         <navbar></navbar>
         <div class="container">
+            <h1>Freecodevote</h1>
+            <h3>Select a poll below</h3>
             <div class="columns is-centered">
-                <div class="column is-two-thirds">
-                    <div class="box">
+                <div class="column is-one-third">
+                    <div class="box ">
                         <div class="control" v-if="auth">
                             <a class="button is-success" @click="createPollModal=true">New Poll</a>
+                            <a class="button is-primary" @click="getMyPolls()">My Polls</a>
+                            <a class="button is-primary" @click="myPolls=false">All Polls</a>
                         </div>
                         <hr>
-                        <div class="box" v-for="poll in polls" @click='openPoll(poll)'>
-                            <div class="content">
-                                <p>{{poll.name}}</p>
+                        <span v-if="myPolls == false">
+                            <div class="box" v-for="poll in polls" @click='openPoll(poll)'>
+                                <div class="content">
+                                    <p>{{poll.name}}</p>
+                                </div>
                             </div>
-                        </div>
+                        </span>
+                        <span v-else>
+                            <div class="box" v-for="poll in user_polls" @click='openPoll(poll)'>
+                                <div class="content">
+                                    <p>{{poll.name}}</p>
+                                </div>
+                            </div>
+                        </span>
+
                     </div>
                 </div>
             </div>
@@ -73,13 +87,15 @@
         data() {
             return {
                 polls: '',
-                id:'',
+                id: '',
                 createPollModal: false,
                 pollOptions: {},
                 newPoll: {
                     options: [],
                 },
-                auth:null
+                auth: null,
+                myPolls:false,
+                user_polls: null
             }
         },
         components: {
@@ -98,10 +114,20 @@
             getAllPolls() {
                 this.$axios.get('/polls').then(resp => {
                     this.polls = resp.data.data;
-                    localStorage.setItem('ip',resp.data.meta)
+                    localStorage.setItem('ip', resp.data.meta)
                 }).catch(e => {
                     console.log(e);
                 })
+            },
+            getMyPolls(){
+                this.$axios.get(`${this.id._id}/polls`).then(resp=>{
+                    console.log(resp,"hdh")
+                    this.user_polls = resp.data.data
+                    this.myPolls = true;
+                }).catch(e=>{
+
+                })
+                this.myPolls = true;
             },
             createPoll() {
                 this.$axios.post(`${this.id._id}/polls`, this.newPoll).then(resp => {
@@ -115,8 +141,10 @@
                     console.log(e.response)
                 })
             },
-            openPoll(poll){
-               this.$router.push({path:`/polls/${poll.poll_id}`});
+            openPoll(poll) {
+                this.$router.push({
+                    path: `/polls/${poll.poll_id}`
+                });
             }
         },
         mounted() {
@@ -129,7 +157,14 @@
     .adjust-inline {
         display: inline !important;
     }
-    .container .columns{
+
+    .container .columns {
+        margin-top: 30px;
+    }
+
+    h1{
+        font-size: 36px;
         margin-top: 50px;
+        font-family: 'Do Hyeon'
     }
 </style>

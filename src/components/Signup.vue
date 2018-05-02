@@ -66,7 +66,12 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+
   .container .columns {
     margin-top: 50px;
+  }
+  h2{
+    font-family: 'Do Hyeon'
   }
 </style>

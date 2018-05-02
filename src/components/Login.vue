@@ -65,4 +65,8 @@
     .container .columns {
         margin-top: 50px;
     }
+
+    h2{
+    font-family: 'Do Hyeon'
+  }
 </style>
