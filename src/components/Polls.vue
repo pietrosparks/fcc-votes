@@ -2,8 +2,10 @@
     <div>
         <navbar></navbar>
         <div class="container">
-            <h1>Freecodevote</h1>
-            <h3>Select a poll below</h3>
+            <div class="bg">
+                <h1>Freecodevote</h1>
+                <h3>Select a poll below</h3>
+            </div>
             <div class="columns is-centered">
                 <div class="column is-one-third">
                     <div class="box ">
@@ -94,7 +96,7 @@
                     options: [],
                 },
                 auth: null,
-                myPolls:false,
+                myPolls: false,
                 user_polls: null
             }
         },
@@ -119,12 +121,12 @@
                     console.log(e);
                 })
             },
-            getMyPolls(){
-                this.$axios.get(`${this.id._id}/polls`).then(resp=>{
-                    console.log(resp,"hdh")
+            getMyPolls() {
+                this.$axios.get(`${this.id._id}/polls`).then(resp => {
+                    console.log(resp, "hdh")
                     this.user_polls = resp.data.data
                     this.myPolls = true;
-                }).catch(e=>{
+                }).catch(e => {
 
                 })
                 this.myPolls = true;
@@ -162,9 +164,13 @@
         margin-top: 30px;
     }
 
-    h1{
+    h1 {
         font-size: 36px;
-        margin-top: 50px;
+        
         font-family: 'Do Hyeon'
+    }
+    .bg{
+        background-color: #fafafa;
+        padding: 35px;
     }
 </style>
