@@ -21,7 +21,7 @@ Vue.prototype.$responseModal = Swal;
 if(process.env.NODE_ENV=="development"){
   axios.defaults.baseURL = process.env.BASEURL_DEV
 }
-else process.env.BASEURL_PROD;
+else axios.defaults.baseURL = process.env.BASEURL_PROD;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
