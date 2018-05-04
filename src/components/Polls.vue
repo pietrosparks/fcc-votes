@@ -124,8 +124,9 @@
             },
             getAllPolls() {
                 this.$axios.get('/polls').then(resp => {
-                    this.polls = resp.data.data;
                     localStorage.setItem('ip', resp.data.meta)
+                    this.polls = resp.data.data;
+                   
                 }).catch(e => {
                     console.log(e);
                 })

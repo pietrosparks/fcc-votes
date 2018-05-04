@@ -1,4 +1,6 @@
 module.exports = (api, Users, Polls, _, functions) => {
+   
+
     api.post('/:userId/polls', (req, res) => {
 
         if (_.isEmpty(req.body)) return functions.jsonResponse(400, 'error', null, res, 'Fields are empty')
@@ -58,7 +60,10 @@ module.exports = (api, Users, Polls, _, functions) => {
         }).exec((err, poll) => {
             if (err) functions.jsonResponse(500, 'error', null, res, "An Error occured while fetching polls", err);
             if (!poll) functions.jsonResponse(404, 'error', null, res, "Poll doesnt exist", err);
-            else return functions.jsonResponse(200, 'success', poll, res, "Polls retrieved Sucessfully");
+            else{
+                const ip = functions.ip.getClientIp(req);
+                return functions.jsonResponse(200, 'success', poll, res, "Polls retrieved Sucessfully",ip);
+            } 
         })
     })
 

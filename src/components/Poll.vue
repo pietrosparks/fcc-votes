@@ -120,12 +120,11 @@
         methods: {
             getPoll() {
                 this.$axios.get(`/polls/${this.$route.params.id}`).then(resp => {
+                    localStorage.setItem('ip', resp.data.meta)
                     this.selected_poll = resp.data.data;
                     this.getChartLabels();
                     this.getChartData();
                     this.shareTwitter();
-
-
                 }).catch(e => {
 
                 })
@@ -280,7 +279,7 @@
     .countbox {
         padding: 10px;
         background-color: teal;
-        display: inline;
+        display: inline-block;
         color: white;
         margin: 10px;
         border-radius: 5px;
