@@ -31,20 +31,22 @@
                 <div class="column is-two-thirds">
                     <div class="box">
                         <piechart v-if="chart_data.datasets" :chart-data="chart_data"></piechart>
+                        <hr>
+                        <div class="countbox" v-for="option in selected_poll.options">
+                            {{option.name}} - {{option.count}}
+                        </div>
+
                     </div>
                 </div>
 
 
             </div>
-            <div class='columns is-centered' v-else  >
+            <div class='columns is-centered' v-else>
                 <div class="column is-two-thirds">
                     <div class="box center">
                         <atom-spinner :size="100" :color="'#ff1d5e'" style="margin:0 auto" />
                     </div>
                 </div>
-
-
-
             </div>
         </div>
 
@@ -123,6 +125,7 @@
                     this.getChartData();
                     this.shareTwitter();
 
+
                 }).catch(e => {
 
                 })
@@ -143,17 +146,25 @@
                 this.selected_poll.options.splice(index, 1)
             },
             vote(option) {
-                option.count++;
+               
 
                 if (localStorage.user) {
                     const user = JSON.parse(localStorage.user);
-                    if (this.selected_poll.voters.includes(user._id)) {
+                    if (this.selected_poll.voters.includes(user._id) || this.selected_poll.voters.includes(localStorage
+                            .ip)) {
                         return window.alert('You cant vote again for this poll')
-                    } else this.selected_poll.voters.push(user._id)
-                } else if (localStorage.ip) {
+                    } else {
+                        option.count++;
+                        this.selected_poll.voters.push(user._id)
+                        this.selected_poll.voters.push(localStorage.ip)
+                    }
+                } else {
                     if (this.selected_poll.voters.includes(localStorage.ip)) {
                         return window.alert('You cant vote again for this poll')
-                    } else this.selected_poll.voters.push(localStorage.ip)
+                    } else {
+                        option.count++;
+                        this.selected_poll.voters.push(localStorage.ip)
+                    }
                 }
 
                 this.$axios.put(`/polls/${this.selected_poll.poll_id}`, this.selected_poll).then(resp => {
@@ -261,8 +272,16 @@
         color: white
     }
 
-    .box.center{
+    .box.center {
         height: 300px;
         padding: 100px;
+    }
+
+    .countbox {
+        padding: 10px;
+        background-color: teal;
+        display: inline;
+        color: white;
+        margin: 10px;
     }
 </style>

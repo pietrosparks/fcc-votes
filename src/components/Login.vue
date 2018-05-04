@@ -51,6 +51,15 @@
                 this.$axios.post('/auth/login', this.user).then(resp => {
                     localStorage.setItem('user', JSON.stringify(resp.data.data))
                     this.$router.push(`/polls`)
+                }).catch(e => {
+                    console.log(e.response)
+                    this.$responseModal({
+                        type: e.response.data.status,
+                        title: 'Oops...',
+                        text: e.response.data.message,
+                        footer: '<a href>Why do I have this issue?</a>',
+                    })
+
                 })
             }
         },
@@ -66,7 +75,7 @@
         margin-top: 50px;
     }
 
-    h2{
-    font-family: 'Do Hyeon'
-  }
+    h2 {
+        font-family: 'Do Hyeon'
+    }
 </style>

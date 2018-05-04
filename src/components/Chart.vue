@@ -29,8 +29,8 @@
 
 <style scoped>
    #doughnut-chart{
-       width:60% !important;
-       height: 60% !important;
+       width:50% !important;
+       height: 50% !important;
        display: inline !important;
    }
 </style>
