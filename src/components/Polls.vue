@@ -6,14 +6,17 @@
                 <h1>Freecodevote</h1>
                 <h3>Select a poll below or signup/login to create one</h3>
             </div>
-            <div class="columns is-centered" v-if="polls.length">
+            <div class="columns is-centered">
                 <div class="column is-one-third">
-                    <div class="box ">
+                    <div class="box">
                         <div class="control" v-if="auth">
                             <a class="button is-success" @click="createPollModal=true">New Poll</a>
                             <a class="button is-primary" @click="getMyPolls()">My Polls</a>
                             <a class="button is-primary" @click="myPolls=false">All Polls</a>
                         </div>
+                    </div>
+                    <div class="box " v-if="polls.length">
+
                         <hr>
                         <span v-if="myPolls == false">
                             <div class="box" v-for="poll in polls" @click='openPoll(poll)'>
@@ -31,15 +34,16 @@
                         </span>
 
                     </div>
-                </div>
-            </div>
-             <div class='columns is-centered' v-else  >
-                <div class="column is-two-thirds">
-                    <div class="box center">
-                        <atom-spinner :size="100" :color="'#ff1d5e'" style="margin:0 auto" />
+                    <div class='columns is-centered' v-else>
+                        <div class="column is-two-thirds">
+                            <div class="box center">
+                                <atom-spinner :size="100" :color="'#ff1d5e'" style="margin:0 auto" />
+                            </div>
+                        </div>
                     </div>
                 </div>
-                </div>
+            </div>
+
         </div>
 
         <!--Create Poll Modal -->
@@ -111,7 +115,7 @@
                 user_polls: null
             }
         },
-       
+
         methods: {
             addOptions() {
                 this.pollOptions.count = 0;
@@ -126,20 +130,25 @@
                 this.$axios.get('/polls').then(resp => {
                     localStorage.setItem('ip', resp.data.meta)
                     this.polls = resp.data.data;
-                   
+
                 }).catch(e => {
                     console.log(e);
                 })
             },
             getMyPolls() {
                 this.$axios.get(`${this.id._id}/polls`).then(resp => {
-                    console.log(resp, "hdh")
                     this.user_polls = resp.data.data
                     this.myPolls = true;
                 }).catch(e => {
-
+                    this.$responseModal({
+                        type: e.response.data.status,
+                        title: 'Oops...',
+                        text: e.response.data.message,
+                        footer: '<a href>Why do I have this issue?</a>',
+                    })
+                    this.myPolls = true;
                 })
-                this.myPolls = true;
+
             },
             createPoll() {
                 this.$axios.post(`${this.id._id}/polls`, this.newPoll).then(resp => {
@@ -180,10 +189,11 @@
 
     h1 {
         font-size: 36px;
-        
+
         font-family: 'Do Hyeon'
     }
-    .bg{
+
+    .bg {
         background-color: #fafafa;
         padding: 35px;
     }

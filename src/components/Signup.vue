@@ -10,11 +10,11 @@
               <hr>
             </div>
             <div class="field">
-                <label class="label control">Name</label>
-                <div class="control">
-                  <input class="input" type="name" placeholder="John Doe" v-model="user.name">
-                </div>
+              <label class="label control">Name</label>
+              <div class="control">
+                <input class="input" type="name" placeholder="John Doe" v-model="user.name">
               </div>
+            </div>
             <div class="field">
               <label class="label control">Email</label>
               <div class="control">
@@ -45,16 +45,21 @@
     name: 'Signup',
     data() {
       return {
-        user:{},
+        user: {},
       }
     },
-    methods:{
-      signUp(){
-        this.$axios.post('/auth/signup',this.user).then(resp=>{
+    methods: {
+      signUp() {
+        this.$axios.post('/auth/signup', this.user).then(resp => {
           this.$responseModal(resp.data.status, resp.data.message, resp.data.status);
           this.$router.push('/login')
-        }).catch(e=>{
-
+        }).catch(e => {
+          this.$responseModal({
+            type: e.response.data.status,
+            title: 'Oops...',
+            text: e.response.data.message,
+            footer: '<a href>Why do I have this issue?</a>',
+          })
         })
       }
     },
@@ -66,12 +71,11 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-
   .container .columns {
     margin-top: 50px;
   }
-  h2{
+
+  h2 {
     font-family: 'Do Hyeon'
   }
 </style>

@@ -126,7 +126,12 @@
                     this.getChartData();
                     this.shareTwitter();
                 }).catch(e => {
-
+                    this.$responseModal({
+                        type: e.response.data.status,
+                        title: 'Oops...',
+                        text: e.response.data.message,
+                        footer: '<a href>Why do I have this issue?</a>',
+                    })
                 })
             },
             editPoll() {
@@ -145,7 +150,7 @@
                 this.selected_poll.options.splice(index, 1)
             },
             vote(option) {
-               
+
 
                 if (localStorage.user) {
                     const user = JSON.parse(localStorage.user);

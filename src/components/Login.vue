@@ -52,7 +52,6 @@
                     localStorage.setItem('user', JSON.stringify(resp.data.data))
                     this.$router.push(`/polls`)
                 }).catch(e => {
-                    console.log(e.response)
                     this.$responseModal({
                         type: e.response.data.status,
                         title: 'Oops...',
