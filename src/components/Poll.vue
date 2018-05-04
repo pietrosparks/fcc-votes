@@ -283,5 +283,6 @@
         display: inline;
         color: white;
         margin: 10px;
+        border-radius: 5px;
     }
 </style>
